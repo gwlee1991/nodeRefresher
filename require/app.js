@@ -3,6 +3,27 @@ const fs = require('fs');
 // const os = require('os');
 const notes = require('./note');
 const _ = require('lodash');
+const yargs = require('yargs');
+
+const argv = yargs.argv;
+var command = process.argv[2];
+console.log("Command: " + command);
+console.log('process', process.argv);
+console.log('yargs:', argv);
+
+if (command === 'add') {
+  notes.addNote(argv.title, argv.body);
+} else if (command === 'list') {
+  notes.getAll();
+} else if (command === 'read') {
+  const title = argv._[1].split(':')[1];
+  notes.getNote(title);
+} else if (command === 'remove') {
+  const title = argv._[1].split(':')[1];
+  notes.removeNote(title);
+} else {
+  console.log('command not recognized');
+}
 
 // var user = os.userInfo();
 // console.log(user);
