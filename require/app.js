@@ -7,19 +7,27 @@ const yargs = require('yargs');
 
 const argv = yargs.argv;
 var command = process.argv[2];
-console.log("Command: " + command);
-console.log('process', process.argv);
-console.log('yargs:', argv);
+// console.log("Command: " + command);
+// console.log('process', process.argv);
+// console.log('yargs:', argv);
 
 if (command === 'add') {
-  notes.addNote(argv.title, argv.body);
+  var note = notes.addNote(argv.title, argv.body);
+  if (note) {
+    console.log('Note created');
+    console.log('--');
+    console.log(`Title: ${note.title}`);
+    console.log(`Body: ${note.body}`);
+  } else {
+    console.log('Note title taken');
+  }
 } else if (command === 'list') {
   notes.getAll();
 } else if (command === 'read') {
-  const title = argv._[1].split(':')[1];
+  const title = argv.title;
   notes.getNote(title);
 } else if (command === 'remove') {
-  const title = argv._[1].split(':')[1];
+  const title = argv.title;
   notes.removeNote(title);
 } else {
   console.log('command not recognized');
